@@ -14,8 +14,8 @@ namespace SA
         // colors player and map
         public Color color1;
         public Color color2;
-        public Color player = Color.black;
-        public Color apple = Color.red;
+        public Color playerColor = Color.black;
+        public Color appleColor = Color.red;
 
         //map necessities
         public Node[,] grid;
@@ -42,6 +42,10 @@ namespace SA
         //timer 
         float timer;
         public float moveRate = 0.5f;
+
+        //tail
+        List<SpecialNode> tail = new List<SpecialNode>();
+        GameObject tailparent;
 
 
         #region Init
@@ -115,11 +119,12 @@ namespace SA
         {
             playerObject = new GameObject("Player");
             SpriteRenderer playerRenderer = playerObject.AddComponent<SpriteRenderer>();
-            playerRenderer.sprite = CreateSprite(player);
+            playerRenderer.sprite = CreateSprite(playerColor);
             playerRenderer.sortingOrder = 1;
             playerNode = GetNode(3, 3);
             playerObject.transform.position = playerNode.worldPosition;
-            
+
+            tailparent = new GameObject("Tail Parent");            
         }
 
         void PlaceCamera()
@@ -135,7 +140,7 @@ namespace SA
         {
             appleObj = new GameObject("Apple");
             SpriteRenderer appleRenderer = appleObj.AddComponent<SpriteRenderer>();
-            appleRenderer.sprite = CreateSprite(apple);
+            appleRenderer.sprite = CreateSprite(appleColor);
             appleRenderer.sortingOrder = 1;
             PlaceApple();
         }
@@ -268,6 +273,20 @@ namespace SA
             Node n = availableNodes[ran];
             appleObj.transform.position = n.worldPosition;
             appleNode = n;
+        }
+
+        SpecialNode CreateTailNode(int x,int y)
+        {
+            SpecialNode s = new SpecialNode();
+            s.node = GetNode(x, y);
+            s.obj = new GameObject();
+            s.obj.transform.parent = tailparent.transform;
+            s.obj.transform.position = s.node.worldPosition;
+            SpriteRenderer sr = s.obj.AddComponent<SpriteRenderer>();
+            sr.sprite = CreateSprite(playerColor);
+
+
+            return null;
         }
         #endregion
 
