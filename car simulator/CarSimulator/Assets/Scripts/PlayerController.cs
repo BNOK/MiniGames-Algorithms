@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.FilePathAttribute;
 
 public class PlayerController : MonoBehaviour
 {
@@ -23,12 +24,12 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        MovePlayer();
+        
     }
 
     private void FixedUpdate()
     {
-        
+        MovePlayer();
     }
 
     private void MovePlayer()
@@ -37,6 +38,7 @@ public class PlayerController : MonoBehaviour
         Vector3 rotationVector = transform.up * Input.GetAxis("Horizontal") * rotationSpeed;
         
         vehicleRb.AddForce(forwardVector * Time.deltaTime);
+
         transform.Rotate(rotationVector * Time.deltaTime);
     }
 
