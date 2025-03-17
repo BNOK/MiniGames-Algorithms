@@ -1821,7 +1821,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7200219959858106622}
   - component: {fileID: 6718342158690186564}
-  - component: {fileID: 9101210877087857357}
+  - component: {fileID: -4527826930976392326}
   m_Layer: 0
   m_Name: Animal_Horse_Brown
   m_TagString: Untagged
@@ -1871,20 +1871,27 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &9101210877087857357
-MonoBehaviour:
+--- !u!65 &-4527826930976392326
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8638966667790001511}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 66b8b5ea686bc8745aa18cf3c5a359ea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  topBound: 50
-  downBound: -50
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &8742114348646005830
 GameObject:
   m_ObjectHideFlags: 0
