@@ -20,6 +20,10 @@ public class ProjectileHandler : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        if (transform.position.x > topBound || transform.position.x < downBound)
+        {
+            Destroy(gameObject);
+        }
     }
 
     

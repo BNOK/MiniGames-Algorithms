@@ -49,8 +49,10 @@ public class SpawnManager : MonoBehaviour
         Vector3 offset = transform.position + new Vector3(xValue, 0, Random.Range(-xOffset, xOffset));
 
         GameObject animalHolder = Instantiate(Animals[animalIndex], offset, AnimalRotationX(xValue));
-        animalHolder.AddComponent<ProjectileController>();
+        ProjectileController tempcontroller =  animalHolder.AddComponent<ProjectileController>();
         animalHolder.AddComponent<ProjectileHandler>();
+
+        tempcontroller.projectileSpeed = 10 + animalIndex * 10;
     }
 
     Quaternion AnimalRotationZ(float value)
