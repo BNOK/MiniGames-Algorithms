@@ -5,7 +5,7 @@ using UnityEngine;
 public class SpawnManager : MonoBehaviour
 {
     public GameObject[] obstaclePrefabs;
-
+    public PlayerController controller;
     public float delayRate = 1.5f;
     public float spawnRate = 2.0f;
 
@@ -13,20 +13,25 @@ public class SpawnManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        controller = GameObject.FindAnyObjectByType<PlayerController>();
         InvokeRepeating("SpawnObstacle", delayRate, spawnRate);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+     
     }
 
     public void SpawnObstacle()
     {
-        int index = Random.Range(0, obstaclePrefabs.Length);
-        offset = transform.position;
-        offset.y = Random.Range(0,4);
-        Instantiate(obstaclePrefabs[index], offset, transform.rotation);
+        if (controller.gameover == false)
+        {
+            int index = Random.Range(0, obstaclePrefabs.Length);
+            offset = transform.position;
+            //offset.y = Random.Range(0, 4);
+            Instantiate(obstaclePrefabs[index], offset, transform.rotation);
+        }
+            
     }
 }
