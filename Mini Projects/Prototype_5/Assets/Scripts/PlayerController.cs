@@ -5,9 +5,10 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public GameObject focalPoint;
     private Rigidbody ballRb;
+    private bool hasPowerUp = false;
 
+    public GameObject focalPoint;
     public float ballSpeed = 20.0f;
     // Start is called before the first frame update
     void Start()
