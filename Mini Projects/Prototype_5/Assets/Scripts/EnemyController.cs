@@ -11,6 +11,7 @@ public class EnemyController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        transform.gameObject.tag = "Enemy";
         if(enemyRb == null)
         {
             enemyRb = GetComponent<Rigidbody>();
