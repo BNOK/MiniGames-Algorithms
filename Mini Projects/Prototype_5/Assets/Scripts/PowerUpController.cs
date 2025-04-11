@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PowerUp : MonoBehaviour
 {
+
+    public float powerUpLifeTime = 5.0f;
     public float rotationSpeed = 10.0f;
     public float floatingSpeed = 1.0f;
     private float currentTime = 0.0f;
@@ -24,6 +26,11 @@ public class PowerUp : MonoBehaviour
     void Update()
     {
         transform.Rotate(Vector3.up * rotationSpeed * Time.deltaTime);
+        
+        if(currentTime > powerUpLifeTime)
+        {
+            Destroy(gameObject);
+        }
 
         if (currentTime < 180)
         {

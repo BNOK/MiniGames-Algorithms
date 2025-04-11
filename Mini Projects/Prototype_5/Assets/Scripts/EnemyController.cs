@@ -7,21 +7,30 @@ public class EnemyController : MonoBehaviour
 {
     private Rigidbody enemyRb;
     private GameObject player;
-    public float Speed = 10.0f;
+
+
+    public float lowerBound = -10.0f;
+    public float Speed = 100.0f;
     // Start is called before the first frame update
     void Start()
     {
         transform.gameObject.tag = "Enemy";
-        if(enemyRb == null)
+        enemyRb = GetComponent<Rigidbody>();
+        if (enemyRb == null)
         {
-            enemyRb = GetComponent<Rigidbody>();
+            enemyRb = gameObject.AddComponent<Rigidbody>();
         }
+
         player = GameObject.Find("Ball");
     }
 
     // Update is called once per frame
     void Update()
     {
+        if(transform.position.y < lowerBound)
+        {
+            Destroy(transform.gameObject);
+        }
         Vector3 direction = player.transform.position - transform.position;
         direction = Vector3.Normalize(direction);
         enemyRb.AddForce(direction * Speed * Time.deltaTime);
