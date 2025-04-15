@@ -4,14 +4,17 @@ using UnityEngine;
 
 public class EnemyX : MonoBehaviour
 {
-    public float speed;
+    public float speed = 10.0f;
     private Rigidbody enemyRb;
-    private GameObject playerGoal;
+    public GameObject playerGoal;
+    public SpawnManagerX spawnManager;
 
     // Start is called before the first frame update
     void Start()
     {
         enemyRb = GetComponent<Rigidbody>();
+        playerGoal = GameObject.FindGameObjectWithTag("PlayerGoal");
+        spawnManager = GameObject.FindAnyObjectByType<SpawnManagerX>();
     }
 
     // Update is called once per frame
@@ -26,15 +29,16 @@ public class EnemyX : MonoBehaviour
     private void OnCollisionEnter(Collision other)
     {
         // If enemy collides with either goal, destroy it
-        if (other.gameObject.name == "Enemy Goal")
+        if (other.gameObject.name == "EnemyGoal")
         {
             Destroy(gameObject);
+            
         } 
-        else if (other.gameObject.name == "Player Goal")
+        else if (other.gameObject.name == "PlayerGoal")
         {
             Destroy(gameObject);
         }
-
+        spawnManager.enemyCount--;
     }
 
 }
