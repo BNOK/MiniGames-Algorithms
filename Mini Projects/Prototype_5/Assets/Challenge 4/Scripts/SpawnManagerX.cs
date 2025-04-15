@@ -13,6 +13,8 @@ public class SpawnManagerX : MonoBehaviour
 
     public int enemyCount;
     public int waveCount = 1;
+    public float roundStartTime = 3.0f;
+    private bool iscoroutinerunning = false;
 
 
     public GameObject player; 
@@ -22,12 +24,10 @@ public class SpawnManagerX : MonoBehaviour
     {
         enemyCount = GameObject.FindGameObjectsWithTag("Enemy").Length;
 
-        if (enemyCount == 0)
+        if (enemyCount == 0 && !iscoroutinerunning)
         {
-            
-            SpawnEnemyWave(waveCount);
+            StartCoroutine(StartNewRound());
         }
-
     }
 
     // Generate random spawn position for powerups and enemy balls
@@ -67,6 +67,13 @@ public class SpawnManagerX : MonoBehaviour
         player.GetComponent<Rigidbody>().linearVelocity = Vector3.zero;
         player.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
 
+    }
+
+    private IEnumerator StartNewRound()
+    {
+        iscoroutinerunning = true;
+        yield return new WaitForSeconds(roundStartTime);
+        SpawnEnemyWave(waveCount);
     }
 
 }

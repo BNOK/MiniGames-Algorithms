@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerControllerX : MonoBehaviour
 {
@@ -12,8 +13,12 @@ public class PlayerControllerX : MonoBehaviour
     public bool hasPowerup;
     public GameObject powerupIndicator;
     public int powerUpDuration = 5;
+    private float currentTime = 0.0f;
+
     public float speed = 500;
 
+    public Canvas PlayerUI;
+    private Slider powerUpSlider;
     public GameObject smokeEffect;
     
     
@@ -28,6 +33,9 @@ public class PlayerControllerX : MonoBehaviour
         powerupIndicator.SetActive(false);
 
         smokeEffect = Instantiate(smokeEffect, transform.position, transform.rotation);
+
+        PlayerUI = GameObject.FindAnyObjectByType<Canvas>();
+        powerUpSlider = PlayerUI.GetComponentInChildren<Slider>();
     }
 
     void Update()
@@ -35,8 +43,9 @@ public class PlayerControllerX : MonoBehaviour
         // Add force to player in direction of the focal point (and camera)
         float verticalInput = Input.GetAxis("Vertical");
         BoostMovement(verticalInput);
-        
         focalPoint.transform.position = transform.position;
+
+        UpdatePowerUpSlider();
         // Set powerup indicator position to beneath player
         powerupIndicator.transform.position = transform.position + new Vector3(0, -0.6f, 0);
         smokeEffect.transform.position = transform.position + new Vector3(0, 10.0f, 0);
@@ -50,17 +59,17 @@ public class PlayerControllerX : MonoBehaviour
             Destroy(other.gameObject);
             hasPowerup = true;
             powerupIndicator.SetActive(true);
-            StartCoroutine(PowerupCooldown());
+            //StartCoroutine(PowerupCooldown());
         }
     }
 
     // Coroutine to count down powerup duration
-    IEnumerator PowerupCooldown()
-    {
-        yield return new WaitForSeconds(powerUpDuration);
-        hasPowerup = false;
-        powerupIndicator.SetActive(false);
-    }
+    //IEnumerator PowerupCooldown()
+    //{
+    //    yield return new WaitForSeconds(powerUpDuration);
+    //    hasPowerup = false;
+    //    powerupIndicator.SetActive(false);
+    //}
 
     // If Player collides with enemy
     private void OnCollisionEnter(Collision other)
@@ -94,6 +103,21 @@ public class PlayerControllerX : MonoBehaviour
         {
             smokeEffect.SetActive(false);
             playerRb.AddForce(focalPoint.transform.forward * verticalInput * speed * Time.deltaTime);
+        }
+    }
+
+    void UpdatePowerUpSlider()
+    {
+        if (hasPowerup)
+        {
+            powerUpSlider.value = currentTime - Time.deltaTime;
+            if(currentTime <= 0)
+            {
+                hasPowerup = false;
+                powerUpSlider.gameObject.SetActive(false);
+                powerupIndicator.SetActive(false);
+                currentTime = 0;
+            }
         }
     }
 }
